@@ -9,6 +9,7 @@ import ActivityFeed from "@/components/activity-feed"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent } from "@/components/ui/card"
 import { Loader2 } from "lucide-react"
+import WorkoutStats from "@/components/workout-stats"
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true)
@@ -30,7 +31,8 @@ export default function Dashboard() {
     // Fetch user data
     const fetchUserData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/users/me", {
+        console.log("Making API call to:", `${process.env.NEXT_PUBLIC_APP_BASE_URL}api/users/me`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}api/users/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -96,8 +98,9 @@ export default function Dashboard() {
           <TabsContent value="workouts">
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">Your Workouts</h2>
-                {/* Workout content will go here */}
+                <h2 className="text-xl font-semibold mb-4">Your Workouts</h2>                
+ <WorkoutStats/>
+
               </CardContent>
             </Card>
           </TabsContent>

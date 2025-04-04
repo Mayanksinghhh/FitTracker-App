@@ -40,7 +40,8 @@ export default function ActivityFeed() {
           return
         }
 
-        const response = await fetch("http://localhost:5000/api/social/feed", {
+        console.log("Making API call to:", `${process.env.NEXT_PUBLIC_APP_BASE_URL}api/social/feed`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}api/social/feed`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -60,65 +61,10 @@ export default function ActivityFeed() {
     }
 
     // For demo purposes, simulate API call
-    setTimeout(() => {
-      const demoActivities = [
-        {
-          id: "1",
-          user: {
-            id: "user1",
-            name: "Jane Smith",
-            avatar: "/placeholder-user.jpg",
-          },
-          type: "workout",
-          workout: {
-            type: "Running",
-            duration: 30,
-            calories: 320,
-          },
-          likes: 12,
-          comments: 3,
-          createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(), // 30 minutes ago
-          isLiked: false,
-        },
-        {
-          id: "2",
-          user: {
-            id: "user2",
-            name: "John Doe",
-            avatar: "/placeholder-user.jpg",
-          },
-          type: "post",
-          content: "Just hit a new personal record on my deadlift! 💪 #fitness #gains",
-          likes: 24,
-          comments: 5,
-          createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(), // 2 hours ago
-          isLiked: true,
-        },
-        {
-          id: "3",
-          user: {
-            id: "user3",
-            name: "Alex Johnson",
-            avatar: "/placeholder-user.jpg",
-          },
-          type: "workout",
-          workout: {
-            type: "Yoga",
-            duration: 45,
-            calories: 180,
-          },
-          likes: 8,
-          comments: 1,
-          createdAt: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(), // 5 hours ago
-          isLiked: false,
-        },
-      ]
-      setActivities(demoActivities)
-      setLoading(false)
-    }, 1000)
+    
 
     // Uncomment to use real API
-    // fetchActivities();
+    fetchActivities();
   }, [])
 
   const handleLike = async (activityId: string) => {
@@ -144,7 +90,8 @@ export default function ActivityFeed() {
       )
 
       // Send request to API
-      const response = await fetch(`http://localhost:5000/api/social/like/${activityId}`, {
+      console.log("Making API call to:", `${process.env.NEXT_PUBLIC_APP_BASE_URL}api/social/like/${activityId}`)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}api/social/like/${activityId}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -153,6 +100,7 @@ export default function ActivityFeed() {
 
       if (!response.ok) {
         throw new Error("Failed to like activity")
+        
       }
     } catch (error) {
       console.error("Error liking activity:", error)

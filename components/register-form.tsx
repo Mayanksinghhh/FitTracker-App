@@ -32,7 +32,9 @@ export default function RegisterForm() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
+      console.log("Base URL:", process.env.NEXT_PUBLIC_APP_BASE_URL);
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +43,7 @@ export default function RegisterForm() {
       })
 
       const data = await response.json()
-
+console.log("res==>", data) 
       if (!response.ok) {
         throw new Error(data.message || "Registration failed")
       }
@@ -53,7 +55,8 @@ export default function RegisterForm() {
       // Redirect to dashboard
       router.push("/dashboard")
     } catch (err: any) {
-      setError(err.message || "Something went wrong")
+      console.error("Registration error:", err)
+      setError(err.message || "Server error. Please try again later.")
     } finally {
       setLoading(false)
     }

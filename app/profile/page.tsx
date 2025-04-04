@@ -14,6 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AlertCircle, User } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { set } from "date-fns"
 
 interface UserProfile {
   id: string
@@ -40,6 +41,7 @@ export default function Profile() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
+  const [tab, setTab] = useState("profile")
   const router = useRouter()
 
   useEffect(() => {
@@ -52,7 +54,8 @@ export default function Profile() {
           return
         }
 
-        const response = await fetch("http://localhost:5000/api/users/profile", {
+        console.log("Making API call to:", `${process.env.NEXT_PUBLIC_APP_BASE_URL}api/users/profile`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}api/users/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -75,34 +78,8 @@ export default function Profile() {
         setLoading(false)
       }
     }
-
-    // For demo purposes, simulate API call
-    setTimeout(() => {
-      const demoProfile = {
-        id: "user1",
-        name: "Jane Smith",
-        email: "jane@example.com",
-        avatar: "/placeholder-user.jpg",
-        bio: "Fitness enthusiast and software developer",
-        fitnessGoal: "Run a marathon by the end of the year",
-        stats: {
-          workouts: 24,
-          following: 15,
-          followers: 8,
-        },
-      }
-
-      setProfile(demoProfile)
-      setFormData({
-        name: demoProfile.name,
-        bio: demoProfile.bio,
-        fitnessGoal: demoProfile.fitnessGoal,
-      })
-      setLoading(false)
-    }, 1000)
-
-    // Uncomment to use real API
-    // fetchProfile();
+    
+    fetchProfile();
   }, [router])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -122,7 +99,8 @@ export default function Profile() {
         return
       }
 
-      const response = await fetch("http://localhost:5000/api/users/profile", {
+      console.log("Making API call to:", `${process.env.NEXT_PUBLIC_APP_BASE_URL}api/users/profile`)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}api/users/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -183,7 +161,7 @@ export default function Profile() {
   return (
     <DashboardLayout>
       <div className="p-6">
-        <Tabs defaultValue="profile" className="w-full max-w-2xl mx-auto">
+        <Tabs value={tab} onValueChange={setTab} className="w-full max-w-2xl mx-auto">
           <TabsList className="mb-4">
             <TabsTrigger value="profile">Profile</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
@@ -237,7 +215,9 @@ export default function Profile() {
                 </div>
 
                 <div className="mt-6">
-                  <Button onClick={() => setIsEditing(true)}>Edit Profile</Button>
+                  <Button onClick={() => {setTab("settings")
+                    
+                  }}>Edit Profile</Button>
                 </div>
               </CardContent>
             </Card>

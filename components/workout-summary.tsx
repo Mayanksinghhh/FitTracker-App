@@ -22,7 +22,8 @@ export default function WorkoutSummary() {
           return
         }
 
-        const response = await fetch("http://localhost:5000/api/workouts/summary", {
+        console.log("Making API call to:", `${process.env.NEXT_PUBLIC_APP_BASE_URL}api/workouts/summary`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}api/workouts/summary`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -34,6 +35,7 @@ export default function WorkoutSummary() {
 
         const data = await response.json()
         setSummary(data)
+        console.log("Summary:", data)
       } catch (error) {
         console.error("Error fetching workout summary:", error)
       } finally {
@@ -42,17 +44,17 @@ export default function WorkoutSummary() {
     }
 
     // For demo purposes, simulate API call
-    setTimeout(() => {
-      setSummary({
-        totalWorkouts: 12,
-        totalDuration: 540, // in minutes
-        totalCalories: 3200,
-      })
-      setLoading(false)
-    }, 1000)
+    // setTimeout(() => {
+    //   // setSummary({
+    //   //   totalWorkouts: 1212,
+    //   //   totalDuration: 540, // in minutes
+    //   //   totalCalories: 3200,
+    //   // })
+    //   setLoading(false)
+    // }, 1000)
 
     // Uncomment to use real API
-    // fetchWorkoutSummary();
+    fetchWorkoutSummary();
   }, [])
 
   const summaryItems = [

@@ -58,7 +58,7 @@ export default function AddWorkout() {
         notes,
       }
 
-      const response = await fetch("http://localhost:5000/api/workouts", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}api/workouts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

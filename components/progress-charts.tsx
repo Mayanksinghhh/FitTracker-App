@@ -52,7 +52,8 @@ export default function ProgressCharts() {
           return
         }
 
-        const response = await fetch("http://localhost:5000/api/workouts/stats", {
+        console.log("Making API call to:", `${process.env.NEXT_PUBLIC_APP_BASE_URL}api/workouts/stats`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}api/workouts/stats`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -72,22 +73,22 @@ export default function ProgressCharts() {
     }
 
     // For demo purposes, simulate API call
-    setTimeout(() => {
-      const demoData = [
-        { date: "Mon", duration: 30, calories: 250, type: "Cardio" },
-        { date: "Tue", duration: 45, calories: 350, type: "Strength" },
-        { date: "Wed", duration: 20, calories: 150, type: "Yoga" },
-        { date: "Thu", duration: 60, calories: 450, type: "Cardio" },
-        { date: "Fri", duration: 50, calories: 400, type: "Strength" },
-        { date: "Sat", duration: 40, calories: 300, type: "HIIT" },
-        { date: "Sun", duration: 30, calories: 200, type: "Yoga" },
-      ]
-      setWorkoutData(demoData)
-      setLoading(false)
-    }, 1000)
+    // setTimeout(() => {
+    //   const demoData = [
+    //     { date: "Mon", duration: 30, calories: 250, type: "Cardio" },
+    //     { date: "Tue", duration: 45, calories: 350, type: "Strength" },
+    //     { date: "Wed", duration: 20, calories: 150, type: "Yoga" },
+    //     { date: "Thu", duration: 60, calories: 450, type: "Cardio" },
+    //     { date: "Fri", duration: 50, calories: 400, type: "Strength" },
+    //     { date: "Sat", duration: 40, calories: 300, type: "HIIT" },
+    //     { date: "Sun", duration: 30, calories: 200, type: "Yoga" },
+    //   ]
+    //   setWorkoutData(demoData)
+    //   setLoading(false)
+    // }, 1000)
 
     // Uncomment to use real API
-    // fetchWorkoutData();
+    fetchWorkoutData();
   }, [])
 
   if (loading) {

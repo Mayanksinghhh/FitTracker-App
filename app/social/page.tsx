@@ -36,7 +36,8 @@ export default function Social() {
           return
         }
 
-        const response = await fetch("http://localhost:5000/api/social/users", {
+        console.log("Making API call to:", `${process.env.NEXT_PUBLIC_APP_BASE_URL}api/social/users`)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}api/social/users`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -57,47 +58,47 @@ export default function Social() {
     }
 
     // For demo purposes, simulate API call
-    setTimeout(() => {
-      const demoUsers = [
-        {
-          id: "user1",
-          name: "Jane Smith",
-          avatar: "/placeholder-user.jpg",
-          isFollowing: true,
-        },
-        {
-          id: "user2",
-          name: "John Doe",
-          avatar: "/placeholder-user.jpg",
-          isFollowing: true,
-        },
-        {
-          id: "user3",
-          name: "Alex Johnson",
-          avatar: "/placeholder-user.jpg",
-          isFollowing: false,
-        },
-        {
-          id: "user4",
-          name: "Sarah Williams",
-          avatar: "/placeholder-user.jpg",
-          isFollowing: false,
-        },
-        {
-          id: "user5",
-          name: "Michael Brown",
-          avatar: "/placeholder-user.jpg",
-          isFollowing: false,
-        },
-      ]
+    // setTimeout(() => {
+    //   const demoUsers = [
+    //     {
+    //       id: "user1",
+    //       name: "Jane Smith",
+    //       avatar: "/placeholder-user.jpg",
+    //       isFollowing: true,
+    //     },
+    //     {
+    //       id: "user2",
+    //       name: "John Doe",
+    //       avatar: "/placeholder-user.jpg",
+    //       isFollowing: true,
+    //     },
+    //     {
+    //       id: "user3",
+    //       name: "Alex Johnson",
+    //       avatar: "/placeholder-user.jpg",
+    //       isFollowing: false,
+    //     },
+    //     {
+    //       id: "user4",
+    //       name: "Sarah Williams",
+    //       avatar: "/placeholder-user.jpg",
+    //       isFollowing: false,
+    //     },
+    //     {
+    //       id: "user5",
+    //       name: "Michael Brown",
+    //       avatar: "/placeholder-user.jpg",
+    //       isFollowing: false,
+    //     },
+    //   ]
 
-      setUsers(demoUsers)
-      setFollowingUsers(demoUsers.filter((user) => user.isFollowing))
-      setLoading(false)
-    }, 1000)
+    //   setUsers(demoUsers)
+    //   setFollowingUsers(demoUsers.filter((user) => user.isFollowing))
+    //   setLoading(false)
+    // }, 1000)
 
     // Uncomment to use real API
-    // fetchUsers();
+    fetchUsers();
   }, [router])
 
   const handleFollow = async (userId: string) => {
@@ -120,7 +121,8 @@ export default function Social() {
       setFollowingUsers(updatedUsers.filter((user) => user.isFollowing))
 
       // Send request to API
-      const response = await fetch(`http://localhost:5000/api/social/follow/${userId}`, {
+      console.log("Making API call to:", `${process.env.NEXT_PUBLIC_APP_BASE_URL}api/social/follow/${userId}`)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BASE_URL}api/social/follow/${userId}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -179,7 +181,7 @@ export default function Social() {
                   <div className="text-center py-8">
                     <Users className="h-12 w-12 mx-auto text-muted-foreground mb-2" />
                     <p className="text-muted-foreground">You are not following anyone yet</p>
-                    <Button variant="link" onClick={() => document.querySelector('[data-value="discover"]')?.click()}>
+                    <Button variant="link" onClick={() => (document.querySelector('[data-value="discover"]') as HTMLElement)?.click()}>
                       Discover users to follow
                     </Button>
                   </div>
